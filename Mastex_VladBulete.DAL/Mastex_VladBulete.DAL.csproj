@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>Mastex_BuleteVlad.DAL</AssemblyName>
+    <RootNamespace>Mastex_BuleteVlad.DAL</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

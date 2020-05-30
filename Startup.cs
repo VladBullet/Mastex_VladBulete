@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mastex_BuleteVlad.BLL.Services;
+using Mastex_BuleteVlad.DAL.Models;
+using Mastex_VladBulete.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -32,7 +36,13 @@ namespace Mastex_BuleteVlad
             });
 
             // Register Services for injection
-            //services.AddScoped< IService, Service>();
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IUserService, UserService>();
+            
+            // add Db context
+            services.AddDbContext<Mastex_AppContext>(options =>
+       options.UseSqlServer(AppSettings.GetConnectionString()));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

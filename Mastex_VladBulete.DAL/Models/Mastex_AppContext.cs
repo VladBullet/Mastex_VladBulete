@@ -19,6 +19,7 @@ namespace Mastex_BuleteVlad.DAL.Models
         public virtual DbSet<Projects> Projects { get; set; }
         public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<ProjectUsers> ProjectUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         { }
@@ -55,6 +56,12 @@ namespace Mastex_BuleteVlad.DAL.Models
                     .IsRequired()
                     .HasMaxLength(50);
             });
+            modelBuilder.Entity<ProjectUsers>(entity =>
+            {
+                entity.Property(e => e.ProjectId).IsRequired();
+                entity.Property(e => e.UserId).IsRequired();
+            });
+
         }
     }
 }

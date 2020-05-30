@@ -1,7 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>Mastex_BuleteVlad.BLL</AssemblyName>
+    <RootNamespace>Mastex_BuleteVlad.BLL</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,11 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mastex_VladBulete.DAL\Mastex_VladBulete.DAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DTO\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Mastex_VladBulete.BLL.DTO;
+using System;
 using System.Collections.Generic;
 
-namespace Mastex_BuleteVlad.DAL.Models
+namespace Mastex_VladBulete.BLL.DTO
 {
-    public partial class Tasks : IModel
+    public class TaskDTO:IDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
