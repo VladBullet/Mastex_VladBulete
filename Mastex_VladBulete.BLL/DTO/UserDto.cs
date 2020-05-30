@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Mastex_VladBulete.BLL.DTO
 {
-    public class UserDTO:IDto
+    public class UserDto:IDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

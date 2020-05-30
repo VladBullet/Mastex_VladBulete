@@ -7,6 +7,8 @@ namespace Mastex_BuleteVlad.BLL.Services
 {
     public interface IUserService
     {
-        List<UserDTO> GetUsersByProjectId(int id);
+        List<UserDto> GetUsersByProjectId(int id);
+        List<UserDto> GetAllUsers();
+        UserDto GetUserById(int id);
     }
 }

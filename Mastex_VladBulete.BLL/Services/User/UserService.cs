@@ -15,27 +15,38 @@ namespace Mastex_BuleteVlad.BLL.Services
         {
             _db = db;
         }
-        public List<UserDTO> GetUsersByProjectId(int uId)
+        public List<UserDto> GetUsersByProjectId(int uId)
         {
             var usersIds = _db.ProjectUsers.Where(x => x.ProjectId == uId).Select(x => x.UserId).ToList();
-            var dtoResults = new List<UserDTO>();
+            var dtoResults = new List<UserDto>();
             foreach (var id in usersIds)
             {
                 dtoResults.Add(GetUserById(id));
             }
             return dtoResults;
         }
-        public UserDTO GetUserById(int id)
+        public UserDto GetUserById(int id)
         {
             var databaseResult = _db.Users.Where(x => x.Id == id).FirstOrDefault();
-            var dtoResult = new UserDTO();
+            var dtoResult = new UserDto();
 
             if (databaseResult != null)
             {
-                dtoResult = databaseResult.ToDto<Users, UserDTO>();
+                dtoResult = databaseResult.ToDto<Users, UserDto>();
             }
 
             return dtoResult;
+        }
+
+        public List<UserDto> GetAllUsers()
+        {
+            var users = _db.Users.ToList();
+            var dtoResults = new List<UserDto>();
+            foreach (var item in users)
+            {
+                dtoResults.Add(GetUserById(item.Id));
+            }
+            return dtoResults;
         }
     }
 }
