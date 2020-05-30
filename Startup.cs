@@ -35,14 +35,16 @@ namespace Mastex_BuleteVlad
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // add Db context
+            services.AddDbContext<Mastex_AppContext>(options =>
+            options.UseSqlServer(AppSettings.GetConnectionString()));
+            //services.AddDbContext<Mastex_AppContext>(options =>
+            // options.UseSqlServer(Configuration.GetConnectionString("DefaultDatabase")));
+
             // Register Services for injection
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IUserService, UserService>();
-            
-            // add Db context
-            services.AddDbContext<Mastex_AppContext>(options =>
-       options.UseSqlServer(AppSettings.GetConnectionString()));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
