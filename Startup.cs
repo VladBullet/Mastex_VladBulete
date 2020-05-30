@@ -31,6 +31,8 @@ namespace Mastex_BuleteVlad
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Register Services for injection
+            //services.AddScoped< IService, Service>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
