@@ -20,10 +20,14 @@ namespace Mastex_BuleteVlad.BLL.Services
         {
             var dbTasks = _db.Tasks.ToList();
             var dtoResults = new List<TaskDto>();
-            foreach (var item in dbTasks)
+            if (dbTasks?.Count > 0)
             {
-                dtoResults.Add(GetTaskById(item.Id));
+                foreach (var item in dbTasks)
+                {
+                    dtoResults.Add(GetTaskById(item.Id));
+                }
             }
+
             return dtoResults;
         }
 
@@ -42,12 +46,16 @@ namespace Mastex_BuleteVlad.BLL.Services
 
         public List<TaskDto> GetTasksByProjectId(int pId)
         {
-            var dbTasks = _db.Tasks.Where(x=>x.ProjectId == pId).ToList();
+            var dbTasks = _db.Tasks.Where(x => x.ProjectId == pId).ToList();
             var dtoResults = new List<TaskDto>();
-            foreach (var item in dbTasks)
+            if (dbTasks?.Count > 0)
             {
-                dtoResults.Add(GetTaskById(item.Id));
+                foreach (var item in dbTasks)
+                {
+                    dtoResults.Add(GetTaskById(item.Id));
+                }
             }
+
             return dtoResults;
         }
     }

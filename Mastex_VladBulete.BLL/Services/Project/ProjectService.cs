@@ -27,11 +27,14 @@ namespace Mastex_BuleteVlad.BLL.Services
             foreach (var item in databaseResult)
             {
                 var aux = item.ToDto<Projects, ProjectDto>();
-                var assignedUsers = _userService.GetUsersByProjectId(item.Id);
-                var tasks = _taskService.GetTasksByProjectId(item.Id);
-                aux.AssingedUsers = assignedUsers;
-                aux.Tasks = tasks;
-                dtoResutls.Add(aux);
+                if (aux != null)
+                {
+                    var assignedUsers = _userService.GetUsersByProjectId(item.Id);
+                    var tasks = _taskService.GetTasksByProjectId(item.Id);
+                    aux.AssingedUsers = assignedUsers;
+                    aux.Tasks = tasks;
+                    dtoResutls.Add(aux);
+                }
             }
             return dtoResutls;
         }
@@ -43,8 +46,13 @@ namespace Mastex_BuleteVlad.BLL.Services
             if (databaseResult != null)
             {
                 dtoResult = databaseResult.ToDto<Projects, ProjectDto>();
-                var assignedUsers = _userService.GetUsersByProjectId(dtoResult.Id);
-                dtoResult.AssingedUsers = assignedUsers;
+                if (dtoResult != null)
+                {
+                    var assignedUsers = _userService.GetUsersByProjectId(dtoResult.Id);
+                    var tasks = _taskService.GetTasksByProjectId(dtoResult.Id);
+                    dtoResult.AssingedUsers = assignedUsers;
+                    dtoResult.Tasks = tasks;
+                }
             }
 
             return dtoResult;
@@ -53,10 +61,14 @@ namespace Mastex_BuleteVlad.BLL.Services
         {
             var projectIds = _db.ProjectUsers.Where(x => x.UserId == uId).Select(x => x.ProjectId).ToList();
             var dtoResults = new List<ProjectDto>();
-            foreach (var id in projectIds)
+            if (projectIds?.Count > 0)
             {
-                dtoResults.Add(GetProjectById(id));
+                foreach (var id in projectIds)
+                {
+                    dtoResults.Add(GetProjectById(id));
+                }
             }
+
             return dtoResults;
 
         }

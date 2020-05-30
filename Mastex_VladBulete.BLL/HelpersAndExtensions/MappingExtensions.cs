@@ -9,7 +9,7 @@ namespace Mastex_VladBulete.BLL.Helpers
 {
     public static class MappingExtensions
     {
-        public static R ToDto<T, R>(this T th) where T : class, IModel where R : class, IDto
+        public static R ToDto<T, R>(this T th) where T : IModel where R : IDto
         {
             var serialized = JsonConvert.SerializeObject(th);
             var deserialized = JsonConvert.DeserializeObject<R>(serialized);
