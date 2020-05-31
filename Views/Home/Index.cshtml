@@ -1,8 +1,20 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using Mastex_BuleteVlad.ViewModels
+@model HomeViewModel
+<h2>Projects</h2>
 
-<div>
-
+<div class="container row">
+    @foreach (var item in Model.Projects)
+    {
+    <div class="card border-light mb-3 col-md-4" style="max-width: 18rem;">
+        <div class="card-header">@item.Title</div>
+        <div class="card-body">
+            <h5 class="card-title">@item.Title</h5>
+            <p class="card-text">@item.Description</p>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-link">Project details</button>
+        </div>
+    </div>
+    }
 
 </div>
