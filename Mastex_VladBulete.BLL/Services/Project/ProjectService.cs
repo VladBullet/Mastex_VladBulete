@@ -12,17 +12,17 @@ namespace Mastex_BuleteVlad.BLL.Services
     {
         private readonly Mastex_AppContext _db;
         private readonly IUserService _userService;
-        private readonly ITaskService _taskService;
+        private readonly ISharedService _sharedService;
 
-        public ProjectService(Mastex_AppContext context, IUserService userService, ITaskService taskService)
+        public ProjectService(Mastex_AppContext context, IUserService userService, ISharedService sharedService)
         {
             _db = context;
             _userService = userService;
-            _taskService = taskService;
+            _sharedService = sharedService;
         }
         public List<ProjectDto> GetAllProjects()
         {
-            var databaseResult = _db.Projects.ToList();
+            var databaseResult = _db.Projects.Where(x => !x.Deleted).ToList();
             var dtoResutls = new List<ProjectDto>();
             foreach (var item in databaseResult)
             {
@@ -30,7 +30,7 @@ namespace Mastex_BuleteVlad.BLL.Services
                 if (aux != null)
                 {
                     var assignedUsers = _userService.GetUsersByProjectId(item.Id);
-                    var tasks = _taskService.GetTasksByProjectId(item.Id);
+                    var tasks = _sharedService.GetTasksByProjectId(item.Id);
                     aux.AssingedUsers = assignedUsers;
                     aux.Tasks = tasks;
                     dtoResutls.Add(aux);
@@ -40,7 +40,7 @@ namespace Mastex_BuleteVlad.BLL.Services
         }
         public ProjectDto GetProjectById(int id)
         {
-            var databaseResult = _db.Projects.Where(x => x.Id == id).FirstOrDefault();
+            var databaseResult = _db.Projects.Where(x => x.Id == id && !x.Deleted).FirstOrDefault();
             var dtoResult = new ProjectDto();
 
             if (databaseResult != null)
@@ -49,7 +49,7 @@ namespace Mastex_BuleteVlad.BLL.Services
                 if (dtoResult != null)
                 {
                     var assignedUsers = _userService.GetUsersByProjectId(dtoResult.Id);
-                    var tasks = _taskService.GetTasksByProjectId(dtoResult.Id);
+                    var tasks = _sharedService.GetTasksByProjectId(dtoResult.Id);
                     dtoResult.AssingedUsers = assignedUsers;
                     dtoResult.Tasks = tasks;
                 }
@@ -70,7 +70,46 @@ namespace Mastex_BuleteVlad.BLL.Services
             }
 
             return dtoResults;
-
         }
+        public void DeleteById(int id)
+        {
+            var databaseResult = _db.Projects.Where(x => x.Id == id && !x.Deleted).FirstOrDefault();
+            if (databaseResult != null)
+            {
+                databaseResult.Deleted = true;
+                _db.SaveChanges();
+            }
+        }
+        public void EditProject(int id, string title = null, string description = null)
+        {
+            // if title and description are both null ->  exit
+            if (string.IsNullOrEmpty(title) && string.IsNullOrEmpty(description))
+            {
+                return;
+            }
+            var databaseResult = _db.Projects.Where(x => x.Id == id && !x.Deleted).FirstOrDefault();
+            if (!string.IsNullOrEmpty(title))
+            {
+                databaseResult.Title = title;
+            }
+            if (!string.IsNullOrEmpty(description))
+            {
+                databaseResult.Description = description;
+            }
+            _db.SaveChanges();
+        }
+        public bool AddProject(string title, string description)
+        {
+            // if either of title or description is null - > exit
+            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description))
+            {
+                return false;
+            }
+            _db.Projects.Add(new Projects { Title = title, Description = description, Deleted = false });
+
+            _db.SaveChanges();
+            return true;
+        }
+       
     }
 }

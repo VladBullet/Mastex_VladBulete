@@ -1,4 +1,5 @@
-﻿using Mastex_BuleteVlad.DAL.Models;
+﻿using Mastex_BuleteVlad.BLL.DTO;
+using Mastex_BuleteVlad.DAL.Models;
 using Mastex_VladBulete.BLL.DTO;
 using Mastex_VladBulete.BLL.Helpers;
 using System;
@@ -8,17 +9,12 @@ using System.Text;
 
 namespace Mastex_BuleteVlad.BLL.Services
 {
-    public class TaskService : ITaskService
+    public class TaskService : SharedService, ITaskService
     {
-        private readonly Mastex_AppContext _db;
-
-        public TaskService(Mastex_AppContext db)
-        {
-            _db = db;
-        }
+        public TaskService(Mastex_AppContext db) : base(db) { }
         public List<TaskDto> GetllTasks()
         {
-            var dbTasks = _db.Tasks.ToList();
+            var dbTasks = _db.Tasks.Where(x => !x.Deleted).ToList();
             var dtoResults = new List<TaskDto>();
             if (dbTasks?.Count > 0)
             {
@@ -30,33 +26,59 @@ namespace Mastex_BuleteVlad.BLL.Services
 
             return dtoResults;
         }
-
-        public TaskDto GetTaskById(int id)
+        public void DeleteById(int id)
         {
-            var databaseResult = _db.Tasks.Where(x => x.Id == id).FirstOrDefault();
-            var dtoResult = new TaskDto();
-
+            var databaseResult = _db.Tasks.Where(x => x.Id == id && !x.Deleted).FirstOrDefault();
             if (databaseResult != null)
             {
-                dtoResult = databaseResult.ToDto<Tasks, TaskDto>();
+                databaseResult.Deleted = true;
+                _db.SaveChanges();
             }
 
-            return dtoResult;
         }
-
-        public List<TaskDto> GetTasksByProjectId(int pId)
+        public void EditTask(int id, string title = null, string description = null, string status = null)
         {
-            var dbTasks = _db.Tasks.Where(x => x.ProjectId == pId).ToList();
-            var dtoResults = new List<TaskDto>();
-            if (dbTasks?.Count > 0)
+            // if title, description and status are all null ->  exit
+            if (string.IsNullOrEmpty(title) && string.IsNullOrEmpty(description) && string.IsNullOrEmpty(status))
             {
-                foreach (var item in dbTasks)
-                {
-                    dtoResults.Add(GetTaskById(item.Id));
-                }
+                return;
+            }
+            var databaseResult = _db.Tasks.Where(x => x.Id == id && !x.Deleted).FirstOrDefault();
+            if (!string.IsNullOrEmpty(title))
+            {
+                databaseResult.Title = title;
+            }
+            if (!string.IsNullOrEmpty(description))
+            {
+                databaseResult.Description = description;
+            }
+            if (!string.IsNullOrEmpty(status))
+            {
+                databaseResult.Status = status;
+            }
+            _db.SaveChanges();
+        }
+        public bool AddTask(int pId, string title, string description)
+        {
+            // if either of title or description is null - > exit
+            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description))
+            {
+                return false;
+            }
+            _db.Tasks.Add(new Tasks { Title = title, Description = description, Status = StatusEnum.Created.Value, ProjectId = pId, AssignedUserId = null, Deleted = false });
+            _db.SaveChanges();
+            return true;
+        }
+        public void AssignUserToTask(int tId, int uId)
+        {
+            var dbResult = _db.Tasks.Where(x => x.Id == tId && !x.Deleted).FirstOrDefault();
+            if (dbResult != null)
+            {
+                AssignUserToProject(dbResult.ProjectId, uId);
+                dbResult.AssignedUserId = uId;
+                _db.SaveChanges();
             }
 
-            return dtoResults;
         }
     }
 }

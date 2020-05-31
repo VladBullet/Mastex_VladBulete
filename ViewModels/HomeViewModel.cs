@@ -8,6 +8,6 @@ namespace Mastex_BuleteVlad.ViewModels
 {
     public class HomeViewModel
     {
-        public List<ProjectDto> Projects { get; set; }
+        public List<ProjectViewModel> Projects { get; set; }
     }
 }

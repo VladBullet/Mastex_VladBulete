@@ -10,5 +10,8 @@ namespace Mastex_BuleteVlad.BLL.Services
         List<ProjectDto> GetAllProjects();
         ProjectDto GetProjectById(int id);
         List<ProjectDto> GetProjecstByUserId(int uId);
+        void DeleteById(int id);
+        void EditProject(int id, string title = null, string description = null);
+        bool AddProject(string title, string description);
     }
 }

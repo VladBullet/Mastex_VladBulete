@@ -27,7 +27,7 @@ namespace Mastex_BuleteVlad.BLL.Services
         }
         public UserDto GetUserById(int id)
         {
-            var databaseResult = _db.Users.Where(x => x.Id == id).FirstOrDefault();
+            var databaseResult = _db.Users.Where(x => x.Id == id && !x.Deleted).FirstOrDefault();
             var dtoResult = new UserDto();
 
             if (databaseResult != null)
@@ -40,7 +40,7 @@ namespace Mastex_BuleteVlad.BLL.Services
 
         public List<UserDto> GetAllUsers()
         {
-            var users = _db.Users.ToList();
+            var users = _db.Users.Where(x => !x.Deleted).ToList();
             var dtoResults = new List<UserDto>();
             foreach (var item in users)
             {

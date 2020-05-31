@@ -8,9 +8,10 @@ namespace Mastex_BuleteVlad.BLL.Services
     public interface ITaskService
     {
         List<TaskDto> GetllTasks();
-        List<TaskDto> GetTasksByProjectId(int pId);
         TaskDto GetTaskById(int id);
-
-       
+        void DeleteById(int id);
+        void EditTask(int id, string title = null, string description = null, string status = null);
+        bool AddTask(int pId, string title, string description);
+        void AssignUserToTask(int tId, int uId);
     }
 }
