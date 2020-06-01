@@ -10,7 +10,7 @@ namespace Mastex_VladBulete.BLL.DTO
         public string Title { get; set; }
         public string Description { get; set; }
         public int ProjectId { get; set; }
-        public int AssignedUserId { get; set; }
+        public int? AssignedUserId { get; set; }
         public string Status { get; set; }
         public bool Deleted { get; set; }
     }

@@ -31,36 +31,6 @@ namespace Mastex_BuleteVlad.Controllers
                 modelProjectList.Add(new ProjectViewModel(item));
             }
             model.Projects = modelProjectList;
-            // mock of the projects for testing
-            // instead of the line below
-            //model.Projects = new List<ProjectViewModel>
-            //{
-            //    new ProjectViewModel
-            //    {
-            //        Id = 1,
-            //        //Status = StatusEnum.Researching,
-            //        Title = "Project 1",
-            //        Description ="Some quick example text to build on the card title and make up the bulk of the card's content.",
-            //        Status = StatusEnum.Researching
-            //    },
-            //    new ProjectViewModel
-            //    {
-            //        Id = 2,
-            //        //Status = StatusEnum.Researching,
-            //        Title = "Project 2",
-            //        Description ="Some quick example text to build on the card title and make up the bulk of the card's content.",
-            //        Status = StatusEnum.InProgress
-            //    },
-            //    new ProjectViewModel
-            //    {
-            //        Id = 3,
-            //        //Status = StatusEnum.Researching,
-            //        Title = "Project 3",
-            //        Description ="Some quick example text to build on the card title and make up the bulk of the card's content.",
-            //        Status = StatusEnum.Done
-            //    }
-            //};
-
             return View(model);
         }
 

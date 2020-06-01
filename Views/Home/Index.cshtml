@@ -17,14 +17,6 @@
                 <p class="card-text">@item.Description</p>
             </div>
             <div class="card-footer">
-                @*@{var parms = new Dictionary<string, string>
-                        {
-                        { "id", item.Id.ToString() },
-                        { "title", item.Title },
-                        { "description", item.Description},
-                        { "status", item.Status.Value},
-                        { "color", item.Color},
-                    };*@
                 <a class="btn btn-outline-primary" asp-area="" asp-controller="Project" asp-action="Details" asp-route-id="@item.Id"><i class="far fa-folder-open"></i></a>
                 <a class="btn btn-outline-danger" style="float:right" asp-area="" asp-controller="Project" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
             </div>
