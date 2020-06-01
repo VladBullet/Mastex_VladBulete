@@ -7,7 +7,7 @@ namespace Mastex_BuleteVlad.BLL.DTO
     public class StatusEnum
     {
 
-        private StatusEnum(string value) { Value = value; }
+        public StatusEnum(string value) { Value = value; }
 
         public string Value { get; set; }
 

@@ -61,6 +61,11 @@ namespace Mastex_BuleteVlad.DAL.Models
                 entity.Property(e => e.ProjectId).IsRequired();
                 entity.Property(e => e.UserId).IsRequired();
             });
+            modelBuilder.Entity<ProjectUsers>().HasKey(table => new
+            {
+                table.UserId,
+                table.ProjectId
+            });
 
         }
     }

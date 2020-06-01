@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Mastex_BuleteVlad.BLL.DTO;
 using Mastex_BuleteVlad.BLL.Services;
+using Mastex_BuleteVlad.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,22 +12,32 @@ namespace Mastex_BuleteVlad.Controllers
 {
     public class ProjectController : Controller
     {
-        IProjectService _projectService;
-        public ProjectController(IProjectService projService)
+        private readonly IProjectService _projectService;
+        private readonly IUserService _userService;
+        public ProjectController(IProjectService projService, IUserService userService)
         {
             _projectService = projService;
+            _userService = userService;
         }
-        // GET: Project/Details/5
+
         [HttpGet]
         public ActionResult Details(int id)
         {
-            return View();
+            var serviceResult = _projectService.GetProjectById(id);
+            var model = new ProjectDetailsViewModel(new ProjectViewModel(serviceResult));
+            var users = _userService.GetUsersByProjectId(serviceResult.Id);
+            var assignedUsers = new List<UserViewModel>();
+            foreach (var item in users)
+            {
+                assignedUsers.Add(new UserViewModel(item));
+            }
+            model.AssignedUsers = assignedUsers;
+            return View(model);
         }
 
-        // POST: Project/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(string title, string description)
         {
             try
             {
@@ -39,16 +51,9 @@ namespace Mastex_BuleteVlad.Controllers
             }
         }
 
-        // GET: Project/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Project/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, string title, string description, string status, string color)
         {
             try
             {
@@ -63,7 +68,6 @@ namespace Mastex_BuleteVlad.Controllers
             }
         }
 
-        // POST: Project/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
