@@ -1,0 +1,18 @@
+﻿@using Mastex_BuleteVlad.ViewModels
+@model List<TaskViewModel>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="card border-@item.Color mb-3 col-md-4" style="max-width: 18rem; margin-right:10px;">
+            <div class="card-header" style="font-weight:bolder; font-size:large;">@item.Title</div>
+            <div class="card-body">
+                <h5 class="card-title text-@item.Color">@item.Status.Value</h5>
+                <p class="card-text limit-text">@item.Description</p>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="Task" asp-action="Details" asp-route-id="@item.Id"><i class="far fa-folder-open"></i></a>
+                <a class="btn btn-outline-danger" style="float:right" asp-area="" asp-controller="Task" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
+            </div>
+        </div>
+    }
+</div>

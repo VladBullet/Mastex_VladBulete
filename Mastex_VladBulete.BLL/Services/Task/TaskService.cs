@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Mastex_BuleteVlad.BLL.Services
 {
-    public class TaskService : SharedService, ITaskService
+    public class TaskService : SharedService, ITaskService, ISharedService
     {
         public TaskService(Mastex_AppContext db) : base(db) { }
         public List<TaskDto> GetAllTasks()

@@ -14,10 +14,13 @@ namespace Mastex_BuleteVlad.Controllers
     {
         private readonly IProjectService _projectService;
         private readonly IUserService _userService;
-        public ProjectController(IProjectService projService, IUserService userService)
+        private readonly ISharedService _sharedService;
+
+        public ProjectController(IProjectService projService, IUserService userService,ISharedService sharedService)
         {
             _projectService = projService;
             _userService = userService;
+            _sharedService = sharedService;
         }
 
         [HttpGet]
@@ -27,11 +30,19 @@ namespace Mastex_BuleteVlad.Controllers
             var model = new ProjectDetailsViewModel(new ProjectViewModel(serviceResult));
             var users = _userService.GetUsersByProjectId(serviceResult.Id);
             var assignedUsers = new List<UserViewModel>();
+
             foreach (var item in users)
             {
                 assignedUsers.Add(new UserViewModel(item));
             }
             model.AssignedUsers = assignedUsers;
+            var tasks = new List<TaskViewModel>();
+            var dbTasks = _sharedService.GetTasksByProjectId(id);
+            foreach (var item in dbTasks)
+            {
+                tasks.Add(new TaskViewModel(item));
+            }
+            model.Tasks = tasks;
             return View(model);
         }
 

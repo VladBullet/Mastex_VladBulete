@@ -1,23 +1,48 @@
 ﻿@using Mastex_BuleteVlad.ViewModels
 @using Mastex_BuleteVlad.BLL.DTO
-@model List<TaskViewModel>
-<div class="d-inline-block">
+@model TaskHomeViewModel
+
+<div class="container">
     <h2>Tasks <a class="btn btn-outline-success" style="margin-left:10px" asp-area="" asp-controller="Task" asp-action="Create"><i class="fas fa-plus-square"></i></a></h2>
 </div>
 <br />
-<div class="container row">
-    @foreach (var item in Model)
+<div class="row">
+    <h5 class="col col-md-2">Filter by Project:</h5>
+    <div class="col col-md-2 text-center taskFilter text-primary" style="margin-right:10px; border-style:solid; border-color:dodgerblue; border-radius:10px; cursor:pointer;" data-id="0">Remove filters</div>
+
+    @foreach (var item in Model.ProjectFilters)
     {
-        <div class="card border-@item.Color mb-3 col-md-4" style="max-width: 18rem; margin-right:10px;">
-            <div class="card-header" style="font-weight:bolder; font-size:large;">@item.Title</div>
-            <div class="card-body text-@item.Color">
-                <h5 class="card-title">@item.Status.Value</h5>
-                <p class="card-text limit-text">@item.Description</p>
-            </div>
-            <div class="card-footer">
-                <a class="btn btn-outline-primary" asp-area="" asp-controller="Task" asp-action="Details" asp-route-id="@item.Id"><i class="far fa-folder-open"></i></a>
-                <a class="btn btn-outline-danger" style="float:right" asp-area="" asp-controller="Task" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
-            </div>
-        </div>
+        <div class="col col-md-2 text-center taskFilter" style="margin-right:10px; border-style:solid; border-color:dimgrey; border-radius:10px; cursor:pointer;" data-id="@item.Id">@item.Title</div>
     }
 </div>
+<br />
+<div class="container" id="partialTaskList">
+    <partial name="_TaskList" model="@Model.Tasks" />
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".taskFilter").on("click", function () {
+            var projId = $(this).data("id");
+            $("#partialTaskList").html("");
+            var model = { projectId : projId };
+
+            // AJAX CALL
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("List","Task")",
+                dataType: "html",
+                data: model,
+                 contentType: 'application/x-www-form-urlencoded',
+                success: function (response) {
+                    $("#partialTaskList").html(response);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+        });
+    });
+
+</script>

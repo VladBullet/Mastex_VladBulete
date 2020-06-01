@@ -32,30 +32,16 @@
 <br />
 <br />
 <hr />
+<br />
 
 <div class="container" id="taskList">
-
+    <h3>Task list </h3>
+    <br />
+    <partial name="~/Views/Task/_TaskList.cshtml" model="@Model.Tasks" />
 </div>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<div>
-    <a class="btn btn-outline-dark" asp-controller="Home" asp-action="Index"><i class="fas fa-angle-left"></i> Back to List</a>
+
+<div class="container align-bottom">
+    <a class="btn btn-outline-dark" asp-controller="Home" asp-action="Index"><i class="fas fa-angle-left"></i> Back to Projects</a>
 </div>
 
 <script type="text/javascript">
