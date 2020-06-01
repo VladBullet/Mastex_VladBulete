@@ -7,7 +7,7 @@ namespace Mastex_BuleteVlad.BLL.Services
 {
     public interface ITaskService
     {
-        List<TaskDto> GetllTasks();
+        List<TaskDto> GetAllTasks();
         TaskDto GetTaskById(int id);
         void DeleteById(int id);
         void EditTask(int id, string title = null, string description = null, string status = null);

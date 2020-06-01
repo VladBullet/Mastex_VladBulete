@@ -12,7 +12,7 @@ namespace Mastex_BuleteVlad.BLL.Services
     public class TaskService : SharedService, ITaskService
     {
         public TaskService(Mastex_AppContext db) : base(db) { }
-        public List<TaskDto> GetllTasks()
+        public List<TaskDto> GetAllTasks()
         {
             var dbTasks = _db.Tasks.Where(x => !x.Deleted).ToList();
             var dtoResults = new List<TaskDto>();

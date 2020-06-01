@@ -7,28 +7,13 @@ using System.Threading.Tasks;
 
 namespace Mastex_BuleteVlad.ViewModels
 {
-    public class ProjectViewModel
+    public class TaskViewModel
     {
-        public ProjectViewModel() { }
-        public ProjectViewModel(int id, string title, string description, string status, string color)
-        {
-            Id = id;
-            Title = title;
-            Description = description;
-            Status = new StatusEnum(status);
-            Color = color;
-        }
-        public ProjectViewModel(ProjectDto proj)
-        {
-            Id = proj.Id;
-            Title = proj.Title;
-            Description = proj.Description;
-            Status = proj.Status;
-        }
-
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public int ProjectId { get; set; }
+        public int? AssignedUserId { get; set; }
         public StatusEnum Status { get; set; }
         private string _color = "primary";
         public string Color
@@ -54,6 +39,16 @@ namespace Mastex_BuleteVlad.ViewModels
                 return _color;
             }
             set { _color = value; }
+        }
+        public TaskViewModel(){}
+        public TaskViewModel( TaskDto task)
+        {
+            Id = task.Id;
+            Title = task.Title;
+            Description = task.Description;
+            ProjectId = task.ProjectId;
+            AssignedUserId = task.AssignedUserId;
+            Status = new StatusEnum(task.Status);
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿@using Mastex_BuleteVlad.ViewModels
 @using Mastex_BuleteVlad.BLL.DTO
-@model HomeViewModel
+@model List<TaskViewModel>
 <div class="d-inline-block">
-    <h2>Projects <a class="btn btn-outline-success" style="margin-left:10px" asp-area="" asp-controller="Project" asp-action="Create"><i class="fas fa-plus-square"></i></a></h2>
+    <h2>Tasks <a class="btn btn-outline-success" style="margin-left:10px" asp-area="" asp-controller="Task" asp-action="Create"><i class="fas fa-plus-square"></i></a></h2>
 </div>
 <br />
 <div class="container row">
-    @foreach (var item in Model.Projects)
+    @foreach (var item in Model)
     {
         <div class="card border-@item.Color mb-3 col-md-4" style="max-width: 18rem; margin-right:10px;">
             <div class="card-header" style="font-weight:bolder; font-size:large;">@item.Title</div>
@@ -15,8 +15,8 @@
                 <p class="card-text limit-text">@item.Description</p>
             </div>
             <div class="card-footer">
-                <a class="btn btn-outline-primary" asp-area="" asp-controller="Project" asp-action="Details" asp-route-id="@item.Id"><i class="far fa-folder-open"></i></a>
-                <a class="btn btn-outline-danger" style="float:right" asp-area="" asp-controller="Project" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
+                <a class="btn btn-outline-primary" asp-area="" asp-controller="Task" asp-action="Details" asp-route-id="@item.Id"><i class="far fa-folder-open"></i></a>
+                <a class="btn btn-outline-danger" style="float:right" asp-area="" asp-controller="Task" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
             </div>
         </div>
     }

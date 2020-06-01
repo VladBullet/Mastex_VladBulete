@@ -33,7 +33,6 @@ namespace Mastex_VladBulete.BLL.DTO
                 }
                 return result;
             }
-            //set { Status = StatusEnum.InProgress; }
         }
         public List<UserDto> AssingedUsers { get; set; }
         public List<TaskDto> Tasks { get; set; }

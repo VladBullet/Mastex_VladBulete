@@ -1,8 +1,11 @@
 ﻿@model Mastex_BuleteVlad.ViewModels.ProjectDetailsViewModel
 
-<h1>Project Details</h1>
-<hr />
-<div>
+<div class="row">
+    <h1 class="col col-md-4">Project Details</h1>
+    <h1 class="col col-md-4"><span class="badge badge-@Model.Project.Color">@Model.Project.Status.Value</span></h1>
+</div>
+<br />
+<div class="container" id="editForm">
     <form id="editProjectForm">
         <div class="form-group">
             @*<label for="formGroupExampleInput">Example label</label>*@
@@ -12,30 +15,27 @@
             @*<label for="exampleFormControlTextarea1">Example textarea</label>*@
             <textarea class="form-control" id="projectDescriptionArea" data-description="@Model.Project.Description" value="@Model.Project.Description" rows="3"></textarea>
         </div>
+        <br />
         <div class="form-group">
-            <h2>Status: <span class="badge badge-@Model.Project.Color">@Model.Project.Status.Value</span></h2>
-        </div>
-        <div class="form-group">
-            @foreach (var item in Model.AssignedUsers)
-            {
-                <div class="btn-outline-dark col-md-4" style="margin-right:10px;">@item.Name</div>
-            }
+            <div class="row">
+                <h5 class="col col-md-2">Assigned Users:</h5>
+                @foreach (var item in Model.AssignedUsers)
+                {
+                    <div class="col col-md-2 text-center" style="margin-right:10px; border-style:solid; border-color:black; border-radius:10px;">@item.Name</div>
+                }
+            </div>
         </div>
         <br />
-        @{var parms = new Dictionary<string, string>
-                      {
-                      { "id", Model.Project.Id.ToString() },
-                      { "title", Model.Project.Title },
-                      { "description", Model.Project.Description},
-                      { "status", Model.Project.Status.Value},
-                      { "color", Model.Project.Color},
-                  };
-        }
-        <a class="btn btn-outline-success" style="float:right;" asp-area="" asp-controller="Project" asp-action="Edit" asp-all-route-data="parms">Save Changes <i class="fas fa-save"></i></a>
-
+        <a class="btn btn-success text-white" style="float:right;">Save Changes<i class="fas fa-save" style="margin-left:10px;"></i></a>
     </form>
 </div>
 <br />
+<br />
+<hr />
+
+<div class="container" id="taskList">
+
+</div>
 <br />
 <br />
 <br />
